@@ -2,8 +2,6 @@
  * Created by pomy on 19/07/2017.
  */
 
-'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
 
@@ -31,4 +29,4 @@ module.exports = {
             name: '[name]_library'
         })
     ]
-}
+};

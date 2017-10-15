@@ -2,8 +2,6 @@
  * Created by pomy on 20/07/2017.
  */
 
-'use strict';
-
 let webpack = require('webpack');
 let WebpackDevServer = require('webpack-dev-server');
 let ora = require('ora');
@@ -19,7 +17,7 @@ const url = `localhost:${config.dev.port}/`;
 
 let spinner = ora({
     text: 'Webpack 正在编译...\n',
-    color: "green"
+    color: 'green'
 }).start();
 
 function compiledFail(){
@@ -50,8 +48,8 @@ compiler.plugin('done', (stats) => {
 //编译失败
 compiler.plugin('failed', (err) => {
     compiledFail();
-    throw new gutil.PluginError("[webpack build err]", err);
+    throw new gutil.PluginError('[webpack build err]', err);
 });
 
 //监听文件修改
-compiler.plugin("compilation", compilation => {});
+compiler.plugin('compilation', compilation => {});

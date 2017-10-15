@@ -1,5 +1,3 @@
-'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
 let ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
@@ -56,4 +54,4 @@ module.exports = {
         }),
         new webpack.optimize.ModuleConcatenationPlugin()
     ]
-}
+};

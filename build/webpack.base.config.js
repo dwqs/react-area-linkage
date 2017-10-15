@@ -2,8 +2,6 @@
  * Created by pomy on 20/07/2017.
  */
 
-'use strict';
-
 let path = require('path');
 let webpack = require('webpack');
 let HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -17,7 +15,7 @@ const apiPrefix = env === 'development' ? config.dev.prefix : config.build.prefi
 console.log('---------env------:', env, '------apiPrefix-------:', apiPrefix);
 
 module.exports = {
-    context: path.resolve(__dirname, "../src"),
+    context: path.resolve(__dirname, '../src'),
     module: {
         noParse: [/static|assets/],
         rules: [
@@ -44,10 +42,10 @@ module.exports = {
         ]
     },
 
-    resolve:{
-        extensions:[".js",".jsx"],
+    resolve: {
+        extensions: ['.js', '.jsx'],
         modules: [path.join(__dirname, '../node_modules')],
-        alias:{
+        alias: {
             '@gh': path.resolve(__dirname, '../gh'),
             '@components': path.resolve(__dirname, '../gh/components')
         }
@@ -65,7 +63,7 @@ module.exports = {
         'babel-polyfill': 'window'
     },
 
-    plugins:[
+    plugins: [
 
         new webpack.DefinePlugin({
             'window.PREFIX': JSON.stringify(apiPrefix)
@@ -88,4 +86,4 @@ module.exports = {
             }
         })
     ]
-}
+};
