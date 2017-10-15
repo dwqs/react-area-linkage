@@ -18,14 +18,14 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-               loader: 'babel-loader'
+                loader: 'babel-loader'
             },
             {
-                test:/\.less$/,
+                test: /\.less$/,
                 use: [ 'style-loader', 'css-loader', 'less-loader']
             }, 
             {
-                test:/\.css$/,
+                test: /\.css$/,
                 use: ['style-loader','css-loader']
             },
             {

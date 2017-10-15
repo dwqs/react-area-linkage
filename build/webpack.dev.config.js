@@ -2,8 +2,6 @@
  * Created by pomy on 20/07/2017.
  */
 
-'use strict';
-
 let path = require('path');
 let webpack = require('webpack');
 let OpenBrowserPlugin = require('open-browser-webpack-plugin');
@@ -36,8 +34,8 @@ devConfig.plugins = (devConfig.plugins || []).concat([
     new webpack.HotModuleReplacementPlugin(),
 
     new webpack.DefinePlugin({
-        "process.env": {
-            "NODE_ENV": JSON.stringify(config.dev.env)
+        'process.env': {
+            'NODE_ENV': JSON.stringify(config.dev.env)
         }
     }),
 
@@ -88,19 +86,19 @@ devConfig.devServer = {
 
 module.exports = Object.assign({},devConfig,{
     entry: {
-        app:[
+        app: [
             'react-hot-loader/patch',
             'webpack/hot/dev-server',
             `webpack-dev-server/client?http://localhost:${config.dev.port}/`,
-            path.resolve(__dirname, '../src/page/index.js')
+            path.resolve(__dirname, '../gh/page/index.js')
         ]
     },
     output: {
-        filename: "[name].js",
+        filename: '[name].js',
         path: config.dev.assetsRoot,
         publicPath: config.dev.assetsPublicPath,
         sourceMapFilename: '[file].map',
-        chunkFilename: "[name].js"
+        chunkFilename: '[name].js'
     },
-    devtool:'source-map'
+    devtool: 'source-map'
 });

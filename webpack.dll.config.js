@@ -11,20 +11,17 @@ let vendors = [
 
 module.exports = {
     entry: {
-        vendor: vendors.concat(
-            'react', 'react-router-dom', 'react-dom', 'prop-types', 'history', 'async-react-component',
-            'axios'
-        )
+        vendor: ['element-react', 'area-data', 'lodash.find']
     },
     output: {
-        path: path.join(__dirname, './dist'),
+        path: path.join(__dirname, './demo'),
         filename: '[name].dll.js',
         //定义输出：window.${output.library}
         library: '[name]_library'
     },
     plugins: [
         new webpack.DllPlugin({
-            path: path.join(__dirname, './dist', '[name]-manifest.json'),
+            path: path.join(__dirname, './demo', '[name]-manifest.json'),
             // 和 output.library 一样即可
             name: '[name]_library'
         })
