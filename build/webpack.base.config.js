@@ -37,7 +37,7 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         limit: 8192,
-                        name: '[name].[ext]?[hash:8]'
+                        name: 'fonts/[name].[ext]?[hash:8]'
                     }
                 }]
             }
@@ -48,8 +48,8 @@ module.exports = {
         extensions:[".js",".jsx"],
         modules: [path.join(__dirname, '../node_modules')],
         alias:{
-            '@src': path.resolve(__dirname, '../src'),
-            '@components': path.resolve(__dirname, '../src/components')
+            '@gh': path.resolve(__dirname, '../gh'),
+            '@components': path.resolve(__dirname, '../gh/components')
         }
     },
 
