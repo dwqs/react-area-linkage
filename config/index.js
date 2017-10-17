@@ -11,6 +11,6 @@ module.exports =  {
     build: {
         env: 'production',
         assetsRoot: path.resolve(__dirname, '../demo'),
-        assetsPublicPath: '/'
+        assetsPublicPath: './demo/'
     }
 };
