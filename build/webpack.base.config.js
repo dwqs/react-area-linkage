@@ -9,15 +9,9 @@ let CopyWebpackPlugin = require('copy-webpack-plugin');
 
 let config = require('../config');
 
-const env = process.env.NODE_ENV || 'development';
-const apiPrefix = env === 'development' ? config.dev.prefix : config.build.prefix;
-
-console.log('---------env------:', env, '------apiPrefix-------:', apiPrefix);
-
 module.exports = {
     context: path.resolve(__dirname, '../src'),
     module: {
-        noParse: [/static|assets/],
         rules: [
             {
                 test: /\.(png|jpg|gif|jpeg)$/,
@@ -59,24 +53,10 @@ module.exports = {
         hints: false
     },
 
-    externals: {
-        'babel-polyfill': 'window'
-    },
-
     plugins: [
-
-        new webpack.DefinePlugin({
-            'window.PREFIX': JSON.stringify(apiPrefix)
-        }),
-
-        //copy assets
-        new CopyWebpackPlugin([
-            {context: '../src', from: 'assets/**/*', to: path.resolve(__dirname, '../dist'), force: true}
-        ]),
-
         new HtmlWebpackPlugin({
             filename: 'index.html',
-            template: 'index.html',
+            template: 'tpl.html',
             inject: true,
             env: process.env.NODE_ENV,
             minify: {

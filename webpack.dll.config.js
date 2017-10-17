@@ -5,10 +5,6 @@
 const path = require('path');
 const webpack = require('webpack');
 
-let vendors = [
-    'mobx', 'mobx-react', 'mobx-react-router', 'async-await-error-handling'
-];
-
 module.exports = {
     entry: {
         vendor: ['element-react', 'area-data', 'lodash.find']
