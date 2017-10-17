@@ -10,7 +10,6 @@ let CopyWebpackPlugin = require('copy-webpack-plugin');
 let config = require('../config');
 
 module.exports = {
-    context: path.resolve(__dirname, '../src'),
     module: {
         rules: [
             {
