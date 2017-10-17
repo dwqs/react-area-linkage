@@ -56,6 +56,7 @@ devConfig.plugins = (devConfig.plugins || []).concat([
     }),
 
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin(),
     new OpenBrowserPlugin({ url: url })
 ]);
 
