@@ -1,3 +1,5 @@
+import './reset.css';
+
 import React, {Component, Children} from 'react';
 import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
