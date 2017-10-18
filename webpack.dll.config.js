@@ -7,7 +7,7 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        vendor: ['element-react', 'area-data', 'lodash.find']
+        vendor: ['antd', 'area-data', 'lodash.find']
     },
     output: {
         path: path.join(__dirname, './demo'),
