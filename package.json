@@ -36,7 +36,8 @@
     "lodash.find": "^4.6.0"
   },
   "peerDependencies": {
-    "react": ">= 15.6.0"
+    "react": ">= 15.6.0",
+    "prop-types": ">= 15.6.0"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.5",
