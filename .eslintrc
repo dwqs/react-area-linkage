@@ -34,6 +34,8 @@
     no-unused-vars: 0,
     no-constant-condition: 0,
     no-undef: 0,
-    import/no-unresolved: 0
+    import/no-unresolved: 0,
+    react/jsx-no-target-blank: 0,
+    react/no-unescaped-entities: 0
   }
 }
