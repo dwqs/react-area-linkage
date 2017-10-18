@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Select } from 'element-react'; 
+import { Select } from 'antd'; 
 import PropTypes from 'prop-types';
 
 import AreaData from 'area-data';

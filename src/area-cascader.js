@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Cascader } from 'element-react'; 
+import { Cascader } from 'antd'; 
 import PropTypes from 'prop-types';
 
 import AreaData from 'area-data';
