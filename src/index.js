@@ -1,11 +1,4 @@
-import './icon.css';
+import './index.less';
 
-import AreaSelect from './area-select';
-import AreaCascader from './area-cascader';
-
-const ReactAreaLinkage = {
-    AreaSelect,
-    AreaCascader
-};
-
-export default ReactAreaLinkage;
+export { default as AreaSelect} from './area-select';
+export { default as AreaCascader } from './area-cascader';
