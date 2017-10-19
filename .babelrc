@@ -17,7 +17,7 @@
     ["import", {
       "libraryName": "antd",
       "libraryDirectory": "lib",
-      "style": "css"
+      "style": true
     }],
     "transform-react-remove-prop-types",
     "transform-decorators-legacy",
