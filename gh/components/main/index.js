@@ -25,6 +25,8 @@ export default class Main extends Component {
                 <AreaText />
                 <h5>返回区域代码和文本</h5>
                 <AreaTextCode />
+                <h5>设置 placeholders</h5>
+                <Basic placeholders={['选择省', '选择市']}/>
             </div>
         );
     }
