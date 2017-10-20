@@ -24,18 +24,25 @@ export default class Basic extends Component {
     }
 
     render () {
+        const { placeholders } = this.props;
         return (
             <div className="code-area">
                 <div className="area-left">
-                    <AreaSelect onChange={this.handleSelectedChange}/>
+                    <AreaSelect placeholders={placeholders ? placeholders : []} onChange={this.handleSelectedChange}/>
                 </div>
                 <div className="area-right">
                     <pre><code>{`[${this.state.selected}]`}</code></pre>
                 </div>
                 {
-                    this.state.shown &&
+                    this.state.shown && !placeholders &&
                     <div className="original-code">
-                        <pre><code><span>//返回值是一个数组，分别是省市的行政区域代码</span><br /><span>&lt;</span>AreaSelect&nbsp;onChange=callback/<span>&gt;</span></code></pre>
+                        <pre><code><span>//返回值是一个数组，分别是省市的行政区域代码</span><br /><span>&lt;</span>AreaSelect&nbsp;onChange=&#123;this.handleSelectedChange&#125;/<span>&gt;</span></code></pre>
+                    </div>
+                }
+                {
+                    this.state.shown && placeholders &&
+                    <div className="original-code">
+                        <pre><code><span>//设置 placeholders，其值应该和关联层次对应</span><br /><span>&lt;</span>AreaSelect&nbsp;placeholders=&#123;['选择省', '选择市']&#125;&nbsp;onChange=&#123;this.handleSelectedChange&#125;/<span>&gt;</span></code></pre>
                     </div>
                 }
                 <div className="show-code" onClick={this.toggle}>
