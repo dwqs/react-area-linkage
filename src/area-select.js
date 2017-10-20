@@ -37,11 +37,12 @@ export default class AreaSelect extends Component {
     }
 
     static propTypes = {
-        type: PropTypes.string,
-        placeholders: PropTypes.array,
-        level: PropTypes.number,
-        size: PropTypes.string,
-        defaultArea: []
+        type: PropTypes.string,  // 返回类型：['code', 'text', 'all']
+        placeholders: PropTypes.array, 
+        level: PropTypes.number,  // 0-->一联 1->二联 2->三联 3->四联
+        size: PropTypes.string, // 大小：['large', 'default', 'small']
+        defaultArea: [], // 默认值
+        onChange: PropTypes.func 
     };
 
     static defaultProps = {
@@ -51,6 +52,94 @@ export default class AreaSelect extends Component {
         size: 'default',
         defaultArea: []
     };
+
+    getAreaCode () {
+        const { level } = this.props;
+        const { curProvinceCode, curCityCode, curAreaCode, curStreetCode } = this.state;
+        let selected = [];
+
+        switch (level) {
+            case 0:
+                selected = [curProvinceCode];
+                break;
+            case 1:
+                selected = [curProvinceCode, curCityCode];
+                break;
+            case 2:
+                selected = [curProvinceCode, curCityCode, curAreaCode];
+                break;
+            case 3:
+                selected = [curProvinceCode, curCityCode, curAreaCode, curStreetCode];
+                break;
+        }
+
+        return selected;
+    }   
+
+    getAreaText () {
+        const { level } = this.props;
+        const { curProvince, curCity, curArea, curStreet } = this.state;
+        
+        let texts = [];
+        
+        switch (level) {
+            case 0:
+                texts = [curProvince];
+                break;
+            case 1:
+                texts = [curProvince, curCity];
+                break;
+            case 2:
+                texts = [curProvince, curCity, curArea];
+                break;
+            case 3:
+                texts = [curProvince, curCity, curArea, curStreet];
+                break;
+        }
+
+        return texts;
+    }
+
+    getAreaCodeAndText () {
+        const { level } = this.props;
+        const { 
+            curProvince, curCity, curArea, curStreet,
+            curProvinceCode, curCityCode, curAreaCode, curStreetCode  
+        } = this.state;
+
+        let textCodes = [];
+
+        switch (level) {
+            case 0:
+                textCodes = [{[curProvinceCode]: curProvince}];
+                break;
+            case 1:
+                textCodes = [{[curProvinceCode]: curProvince}, {[curCityCode]: curCity}];
+                break;
+            case 2:
+                textCodes = [{[curProvinceCode]: curProvince}, {[curCityCode]: curCity}, {[curAreaCode]: curArea}];
+                break;
+            case 3:
+                textCodes = [{[curProvinceCode]: curProvince}, {[curCityCode]: curCity}, {[curAreaCode]: curArea}, {[curStreetCode]: curStreet}];
+                break;
+        }
+
+        return textCodes;
+    }
+
+    callback () {
+        const { onChange, type } = this.props;
+        
+        if(typeof onChange === 'function') {
+            if(type === 'code') {
+                onChange(this.getAreaCode());
+            } else if (type === 'text') {
+                onChange(this.getAreaText());
+            } else if (type === 'all') {
+                onChange(this.getAreaCodeAndText());
+            }
+        }
+    }
 
     handleProvinceChange = (provinceCode) => {
         console.log('province change', provinceCode, AreaData[provinceCode]);
@@ -64,8 +153,9 @@ export default class AreaSelect extends Component {
             curCity,
             curCityCode: Object.keys(citys)[0],
             citys
+        }, () => {
+            this.callback();
         });
-        this.props.onChange([provinceCode, Object.keys(citys)[0]]);
     }
 
     handleCityChange = (cityCode) => {
@@ -75,8 +165,9 @@ export default class AreaSelect extends Component {
             curCity,
             curCityCode: cityCode,
             areas: AreaData[cityCode]
+        }, () => {
+            this.callback();
         });
-        this.props.onChange([this.state.curProvinceCode, cityCode]);
     }
 
     render () {
