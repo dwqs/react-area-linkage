@@ -35,7 +35,7 @@ export default class Size extends Component {
                 {
                     this.state.shown &&
                     <div className="original-code">
-                        <pre><code><span>//size:['small','default','large'], 默认值是 default</span><br /><span>&lt;</span>AreaSelect&nbsp;size='large' onChange=callback/<span>&gt;</span></code></pre>
+                        <pre><code><span>//size:['small','default','large'], 默认值是 default</span><br /><span>&lt;</span>AreaSelect&nbsp;size='large' onChange=&#123;this.handleSelectedChange&#125;/<span>&gt;</span></code></pre>
                     </div>
                 }
                 <div className="show-code" onClick={this.toggle}>

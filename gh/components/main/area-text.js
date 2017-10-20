@@ -35,7 +35,7 @@ export default class AreaText extends Component {
                 {
                     this.state.shown &&
                     <div className="original-code">
-                        <pre><code><span>//type:['text','all','code'], 默认值是 code. 返回值是一个数组，分别是省市的行政区域文本</span><br /><span>&lt;</span>AreaSelect&nbsp; type='text' onChange=callback/<span>&gt;</span></code></pre>
+                        <pre><code><span>//type:['text','all','code'], 默认值是 code. 返回值是一个数组，分别是省市的行政区域文本</span><br /><span>&lt;</span>AreaSelect&nbsp; type='text' onChange=&#123;this.handleSelectedChange&#125;/<span>&gt;</span></code></pre>
                     </div>
                 }
                 <div className="show-code" onClick={this.toggle}>
