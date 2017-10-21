@@ -22,7 +22,7 @@ import { AreaSelect, AreaCascader } from 'react-area-linkage';
 
 //setting
 <AreaSelect type='all' level={2} onChange={this.selectedChange} />
-< type='all' onChange={this.selectedChange} level={2} />
+<AreaCascader type='all' onChange={this.selectedChange} level={2} />
 ```
 
 More demo to visit [here](https://dwqs.github.io/react-area-linkage/).
