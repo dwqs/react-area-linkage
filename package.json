@@ -4,6 +4,7 @@
   "description": "React area linkage",
   "author": "dwqs",
   "license": "MIT",
+  "main": "dist/index.js",
   "private": false,
   "repository": {
     "type": "git",
