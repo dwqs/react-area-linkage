@@ -1,4 +1,4 @@
-import './reset.css';
+import './reset.less';
 
 import React, {Component, Children} from 'react';
 import ReactDOM from 'react-dom';

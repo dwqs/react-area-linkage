@@ -28,7 +28,7 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         limit: 8192,
-                        name: 'fonts/[name].[ext]?[hash:8]'
+                        name: 'fonts/[name].[ext]'
                     }
                 }]
             }
