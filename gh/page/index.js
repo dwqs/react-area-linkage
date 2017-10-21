@@ -29,7 +29,7 @@ if(env === 'development'){
 } else {
     window.onload = function () {
         ReactDOM.render(
-            App,
+            <App />,
             document.getElementById('app')
         );
     };
