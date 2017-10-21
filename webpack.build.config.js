@@ -40,6 +40,22 @@ module.exports = {
             }
         ]
     },
+    // fix: https://stackoverflow.com/questions/38053561/only-a-reactowner-can-have-refs-you-might-be-adding-a-ref-to-a-component-that-w
+    externals: [{
+        'react': {
+            root: 'React',
+            commonjs2: 'react',
+            commonjs: 'react',
+            amd: 'react'
+        }
+    }, {
+        'react-dom': {
+            root: 'ReactDOM',
+            commonjs2: 'react-dom',
+            commonjs: 'react-dom',
+            amd: 'react-dom'
+        }
+    }],
     plugins: [
         new ParallelUglifyPlugin({
             workerCount: os.cpus().length,
