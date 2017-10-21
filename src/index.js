@@ -1,4 +1,9 @@
 import './index.less';
 
-export { default as AreaSelect} from './area-select';
-export { default as AreaCascader } from './area-cascader';
+import AreaSelect from './area-select';
+import AreaCascader from './area-cascader';
+
+export {
+    AreaSelect,
+    AreaCascader
+};
