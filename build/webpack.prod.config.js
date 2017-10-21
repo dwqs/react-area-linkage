@@ -37,7 +37,7 @@ prodConfig.module.rules.unshift({
 });
 
 prodConfig.plugins = (prodConfig.plugins || []).concat([
-    new CleanWebpackPlugin(['dmeo'], {
+    new CleanWebpackPlugin(['demo'], {
         root: path.join(__dirname, '../'),
         verbose: true,
         dry: false
