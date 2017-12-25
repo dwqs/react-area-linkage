@@ -20,8 +20,8 @@ export default class AreaSelect extends Component {
             streets: {},
 
             // state
-            curProvince: undefined,
-            curProvinceCode: undefined,
+            curProvince: undefined, // text
+            curProvinceCode: undefined, // code
             curCity: undefined,
             curCityCode: undefined,
             curArea: undefined,
@@ -212,14 +212,30 @@ export default class AreaSelect extends Component {
 
     handleCityChange = (cityCode) => {
         const curCity = this.state.citys[cityCode];
-
         const areas = AreaData[cityCode];
-        const curArea = Object.values(areas)[0];
-        const curAreaCode = Object.keys(areas)[0];
 
-        const streets = AreaData[curAreaCode];
-        const curStreet = Object.values(streets)[0];
-        const curStreetCode = Object.keys(streets)[0];
+        let curArea = '';
+        let curAreaCode = '';
+        let streets = undefined;
+        let curStreet = '';
+        let curStreetCode = '';
+
+        if (areas) {
+            curArea = Object.values(areas)[0];
+            curAreaCode = Object.keys(areas)[0];
+        } else {
+            curArea = curCity;
+            curAreaCode = cityCode;
+        }
+
+        streets = AreaData[curAreaCode];
+        if (streets) {
+            curStreet = Object.values(streets)[0];
+            curStreetCode = Object.keys(streets)[0];
+        } else {
+            curStreet = curArea;
+            curStreetCode = curAreaCode;
+        }
 
         this.setState({
             curCity,
@@ -235,10 +251,18 @@ export default class AreaSelect extends Component {
 
     handleAreaChange = (areaCode) => {
         const curArea = this.state.areas[areaCode];
-
         const streets = AreaData[areaCode];
-        const curStreet = Object.values(streets)[0];
-        const curStreetCode = Object.keys(streets)[0];
+
+        let curStreet = '';
+        let curStreetCode = '';
+
+        if (streets) {
+            curStreet = Object.values(streets)[0];
+            curStreetCode = Object.keys(streets)[0];
+        } else {
+            curStreet = curArea;
+            curStreetCode = areaCode;
+        }
 
         this.setState({
             curArea,
