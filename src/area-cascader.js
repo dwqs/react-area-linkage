@@ -3,14 +3,20 @@ import { Cascader } from 'antd';
 import PropTypes from 'prop-types';
 
 import AreaData from 'area-data';
+import find from 'lodash.find';
 
-import { assert } from './utils';
+import { assert, isArray } from './utils';
 
 export default class AreaCascader extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            options: []
+            provinces: AreaData['86'],
+            options: [],
+            defVal: [],
+            defValCode: ['440000','440300','440305'],
+            isSetDefault: false,
+            isCode: false
         };
     }
 
@@ -19,7 +25,8 @@ export default class AreaCascader extends Component {
         placeholder: PropTypes.string, 
         level: PropTypes.number,  // 0->二联 1->三联
         size: PropTypes.string, // 大小：['large', 'default', 'small']
-        onChange: PropTypes.func 
+        onChange: PropTypes.func,
+        defaultArea: PropTypes.array
     };
 
     static defaultProps = {
@@ -124,6 +131,80 @@ export default class AreaCascader extends Component {
         }
     }
 
+    beforeSetDefault () {
+        const { defaultArea } = this.props;
+        const chinese = /^[\u4E00-\u9FA5\uF900-\uFA2D]{3,}$/;
+        const num = /^\d{6,}$/;
+        const isCode = num.test(defaultArea[0]);
+
+        let isValid;
+
+        if (!isCode) {
+            isValid = defaultArea.every((item) => chinese.test(item));
+        } else {
+            isValid = defaultArea.every((item) => num.test(item));
+        }
+        assert(isValid, '传入的默认值参数有误');
+
+        this.setState({
+            isCode,
+            defVal: defaultArea,
+            isSetDefault: true
+        }, () => {
+            this.setDefaultValue();
+        });
+    }
+
+    setDefaultValue () {
+        let provinceCode = '';
+        let cityCode = '';
+        let areaCode = '';
+
+        if (this.state.isCode) {
+            provinceCode = this.state.defVal[0];
+        } else {
+            const province = find(this.state.provinces, (item) => item === this.state.defVal[0]);
+            assert(province, `省份 ${this.state.defVal[0]} 不存在`);
+            provinceCode = find(Object.keys(this.state.provinces), (item) => this.state.provinces[item] === this.state.defVal[0]);
+        }
+
+        const citys = AreaData[provinceCode];
+
+        if (this.state.isCode) {
+            const city = find(Object.keys(citys), (item) => item === this.state.defVal[1]);
+            assert(city, `城市 ${this.state.defVal[1]} 不存在于省份 ${this.state.defVal[0]} 中`);
+            cityCode = this.state.defVal[1];
+        } else {
+            const city = find(citys, (item) => item === this.state.defVal[1]);
+            assert(city, `城市 ${this.state.defVal[1]} 不存在于省份 ${this.state.defVal[0]} 中`);
+            cityCode = find(Object.keys(citys), (item) => citys[item] === this.state.defVal[1]);
+        }
+        const areas = AreaData[cityCode];
+        if (this.state.defVal[2]) {
+            if (areas) {
+                if (this.state.isCode) {
+                    const curArea = find(Object.keys(areas), (item) => item === this.state.defVal[2]);
+                    assert(curArea, `县区 ${this.state.defVal[2]} 不存在于城市 ${this.state.defVal[1]} 中`);
+                    areaCode = curArea;
+                } else {
+                    const curArea = find(areas, (item) => item === this.state.defVal[2]);
+                    assert(curArea, `县区 ${this.state.defVal[2]} 不存在于城市 ${this.state.defVal[1]} 中`);
+                    areaCode = find(Object.keys(areas), (item) => areas[item] === this.state.defVal[2]);
+                }
+            } else {
+                areaCode = cityCode;
+            }
+        }
+
+        const defValCode = [provinceCode, cityCode, areaCode];
+        this.setState({
+            defValCode: defValCode
+        }, () => {
+            this.forceUpdate();
+        });
+        this.handleSelectChange(defValCode);
+    }
+
     render () {
         const { options } = this.state;
         let { size, type, placeholder, level } = this.props;
@@ -149,6 +230,7 @@ export default class AreaCascader extends Component {
                 <Cascader 
                     placeholder={placeholder} 
                     size={size} 
+                    defaultValue={this.state.defValCode}
                     options={options} 
                     onChange={this.handleSelectChange} />
             </div>
@@ -156,7 +238,10 @@ export default class AreaCascader extends Component {
     }
 
     componentDidMount () {
-        const { level } = this.props;
+        const { level, defaultArea } = this.props;
+        if (isArray(defaultArea) && defaultArea.length >= 2) {
+            this.beforeSetDefault();
+        }
 
         if (level === 0) {
             this.setState({

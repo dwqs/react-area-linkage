@@ -10,6 +10,7 @@ import DefaultVal from './default-value';
 
 import CasBasic from './cas-basic';
 import CasAreaTextCode from './cas-text-code';
+import CasAreaDef from './cas-def-value';
 
 export default class Main extends Component {
     constructor (){
@@ -51,6 +52,8 @@ export default class Main extends Component {
                 <CasBasic />
                 <h5>设置 placeholder</h5>
                 <CasBasic placeholder='选择区域' />
+                <h5>设置默认值</h5>
+                <CasAreaDef />
                 <h5>返回区域文本和代码</h5>
                 <CasAreaTextCode />
                 <p className='desc'>
