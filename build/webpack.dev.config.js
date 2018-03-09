@@ -49,12 +49,6 @@ devConfig.plugins = (devConfig.plugins || []).concat([
         loaders: ['style-loader','css-loader', 'postcss-loader']
     })),
 
-    new webpack.DllReferencePlugin({
-        context: __dirname,
-        //引入 dll 生成的 manifest 文件
-        manifest: require('../demo/vendor-manifest.json')
-    }),
-
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.NamedModulesPlugin(),
     new OpenBrowserPlugin({ url: url })
