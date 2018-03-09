@@ -23,7 +23,6 @@
   ],
   "scripts": {
     "prepush": "npm run ilint -q",
-    "dll": "npx webpack --config webpack.dll.config.js",
     "dev": "npx cross-env NODE_ENV=development node ./build/dev-server.js",
     "build": "npx cross-env NODE_ENV=production npx webpack --config ./build/webpack.prod.config.js --progress --hide-modules",
     "ilint": "npx eslint src/**/*.js",
@@ -74,7 +73,6 @@
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.3.0",
     "postcss-loader": "^2.0.6",
-    "precss": "^2.0.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-hot-loader": "^3.0.0-beta.7",
