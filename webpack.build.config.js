@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
-let ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
-let os = require('os');
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const os = require('os');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 
@@ -9,16 +9,18 @@ module.exports = {
     entry: {
         index: path.resolve(__dirname, './src/index')
     },
+
     output: {
         path: path.join(__dirname, './dist'),
         filename: '[name].js',
         library: 'ReactAreaLinkage',
         libraryTarget: 'umd'
     },
+
     module: {
         rules: [
             {
-                test: /\.js$/,
+                test: /\.jsx?$/,
                 exclude: /node_modules/,
                 loader: 'babel-loader'
             },
@@ -48,6 +50,7 @@ module.exports = {
             }
         ]
     },
+
     // fix: https://stackoverflow.com/questions/38053561/only-a-reactowner-can-have-refs-you-might-be-adding-a-ref-to-a-component-that-w
     externals: [{
         'react': {
@@ -64,6 +67,15 @@ module.exports = {
             amd: 'react-dom'
         }
     }],
+
+    resolve: {
+        extensions: ['.js', '.jsx'],
+        modules: [path.join(__dirname, './node_modules')],
+        alias: {
+            '@src': path.resolve(__dirname, './src')
+        }
+    },
+
     plugins: [
         new ExtractTextPlugin({
             filename: '[name].css'
