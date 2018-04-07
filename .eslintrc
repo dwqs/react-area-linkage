@@ -39,6 +39,7 @@
     react/no-unescaped-entities: 0,
     react/prop-types: 0,
     react/jsx-no-comment-textnodes: 0,
-    no-case-declarations: 0
+    no-case-declarations: 0,
+    react/no-find-dom-node: 0
   }
 }
