@@ -177,21 +177,21 @@ export default class AreaSelect extends Component {
             }
         }
 
-        const streets = AreaData[curAreaCode];
-        let curStreet = Object.values(streets)[0];
-        let curStreetCode = Object.keys(streets)[0];
+        const streets = {}; //AreaData[curAreaCode];
+        let curStreet = ''; //Object.values(streets)[0];
+        let curStreetCode = ''; Object.keys(streets)[0];
 
-        if(this.props.level >= 3 && defaults[3]) {
-            if(isCode) {
-                curStreet = find(Object.keys(streets), (item) => item === defaults[3]);
-                assert(curStreet, `街道 ${defaults[3]} 不存在于县区 ${defaults[2]} 中`);
-                curStreetCode = defaults[3];
-            } else {
-                curStreet = find(streets, (item) => item === defaults[3]);
-                assert(curStreet, `街道 ${defaults[3]} 不存在于县区 ${defaults[3]} 中`);
-                curStreetCode = find(Object.keys(streets), (item) => streets[item] === defaults[3]);
-            }
-        }
+        // if(this.props.level >= 3 && defaults[3]) {
+        //     if(isCode) {
+        //         curStreet = find(Object.keys(streets), (item) => item === defaults[3]);
+        //         assert(curStreet, `街道 ${defaults[3]} 不存在于县区 ${defaults[2]} 中`);
+        //         curStreetCode = defaults[3];
+        //     } else {
+        //         curStreet = find(streets, (item) => item === defaults[3]);
+        //         assert(curStreet, `街道 ${defaults[3]} 不存在于县区 ${defaults[3]} 中`);
+        //         curStreetCode = find(Object.keys(streets), (item) => streets[item] === defaults[3]);
+        //     }
+        // }
 
         this.setState({
             curProvince,
