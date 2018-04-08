@@ -5,7 +5,7 @@ import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
 import AreaData from 'area-data';
 
-import { isArray, scrollIntoView, shallowEqualArrays } from '@src/utils';
+import { isArray, scrollIntoView } from '@src/utils';
 
 import emitter from '../emit';
 
