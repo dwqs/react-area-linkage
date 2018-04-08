@@ -31,7 +31,6 @@
     "prepublishOnly": "npx webpack --config ./webpack.build.config.js --progress --hide-modules"
   },
   "dependencies": {
-    "antd": "^2.13.6",
     "area-data": "^3.0.1",
     "array-tree-filter": "^2.1.0",
     "classnames": "^2.2.5",
@@ -47,7 +46,6 @@
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
-    "babel-plugin-import": "^1.6.2",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.9",

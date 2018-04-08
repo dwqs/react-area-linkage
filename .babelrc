@@ -14,11 +14,6 @@
     "react"
   ],
   "plugins": [
-    ["import", {
-      "libraryName": "antd",
-      "libraryDirectory": "lib",
-      "style": true
-    }],
     "transform-react-remove-prop-types",
     "transform-decorators-legacy",
     "transform-class-properties",
