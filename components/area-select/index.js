@@ -331,7 +331,7 @@ export default class AreaSelect extends React.Component {
     }
 
     render () {
-        const { provinces, citys, areas, curProvince, curCity, curArea } = this.state;
+        const { provinces, citys, areas, curProvinceCode, curCityCode, curAreaCode } = this.state;
         let { size, type, placeholders, level } = this.props;
 
         if(!['large', 'medium', 'small'].includes(size)) {
@@ -352,12 +352,12 @@ export default class AreaSelect extends React.Component {
 
         return (
             <div className='area-select-wrap'>
-                { this.renderSelectComponent(curProvince, 0, this.provinceChange.bind(this), provinces) }
+                { this.renderSelectComponent(curProvinceCode, 0, this.provinceChange.bind(this), provinces) }
                 {
-                    level >= 1 ? this.renderSelectComponent(curCity, 1, this.cityChange.bind(this), citys) : null
+                    level >= 1 ? this.renderSelectComponent(curCityCode, 1, this.cityChange.bind(this), citys) : null
                 }
                 {
-                    level >= 2 ? this.renderSelectComponent(curArea, 2, this.areaChange.bind(this), areas) : null
+                    level >= 2 ? this.renderSelectComponent(curAreaCode, 2, this.areaChange.bind(this), areas) : null
                 }
             </div>
         );

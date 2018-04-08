@@ -10,13 +10,11 @@ export default class Select extends React.Component {
         super(props);
         this.state = {
             top: 32,
-            shown: false,
-            val: ''
+            shown: false
         };
 
         this.rootDOM = null;
         this.areaRect = null;
-        this.scrolling = false;
     }
 
     static propTypes = {
@@ -42,10 +40,11 @@ export default class Select extends React.Component {
         if (this.props.disabled) {
             return;
         }
+        
         this.setState({
             shown: !this.state.shown,
             top: this.setPosition(false)
-        });
+        }, this.scrollToSelectedOption);
     }
 
     setPosition = (isUpdate = true) => {
@@ -80,18 +79,13 @@ export default class Select extends React.Component {
         }
 
         this.setState({
-            shown: false,
-            val: value
+            shown: false
         });
     }
 
     scrollToSelectedOption = () => {
-        if (!this.scrolling) {
-            this.scrolling = true;
-            
-            // this.scrolling = false;
-            console.log('eeee');
-        }
+        const target = this.listWrap.querySelector('.selected');
+        target && scrollIntoView(this.listWrap, target);
     }
 
     setWrapRef = (node) => {
@@ -100,7 +94,7 @@ export default class Select extends React.Component {
 
     render () {
         const { placeholder, value, disabled, size, children, label } = this.props;
-        const { shown, top, val } = this.state;
+        const { shown, top } = this.state;
         
         const classes = classNames('area-select', {
             'medium': size === 'medium',
@@ -121,7 +115,7 @@ export default class Select extends React.Component {
                             React.Children.map(children, el => {
                                 return React.cloneElement(el, Object.assign({}, el.props, {
                                     className: classNames(el.props.className, {
-                                        'selected': el.props.value === val
+                                        'selected': el.props.value === value
                                     }),
                                     onClick: this.handleOptionClick.bind(this, el)
                                 }));
@@ -133,11 +127,10 @@ export default class Select extends React.Component {
         );
     }
     
-    componentDidMount() {
+    componentDidMount () {
         this.rootDOM = findDOMNode(this);
         this.areaRect = this.rootDOM.getBoundingClientRect();
         
-        this.listWrap.addEventListener('transitionend', this.scrollToSelectedOption, false);
         window.document.addEventListener('scroll', this.handleDocResize, false);
         window.document.addEventListener('click', this.handleDocClick, false);
         window.addEventListener('resize', this.handleDocResize, false);
