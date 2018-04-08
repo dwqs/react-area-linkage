@@ -34,7 +34,6 @@ export default class AreaSelect extends React.Component {
     }
     
     static propTypes = {
-        value: PropTypes.array,
         type: PropTypes.oneOf(['code', 'text', 'all']),  // 返回类型
         placeholders: PropTypes.array, 
         level: PropTypes.oneOf([0, 1, 2]),  // 0-->一联 1->二联 2->三联
@@ -50,8 +49,54 @@ export default class AreaSelect extends React.Component {
         level: 1,
         size: 'medium',
         defaultArea: [],
-        disabled: false,
-        value: []
+        disabled: false
+    }
+
+    beforeSetDefault () {
+        const { defaultArea } = this.props;
+        const chinese = /^[\u4E00-\u9FA5\uF900-\uFA2D]{2,}$/;
+        const num = /^\d{6,}$/;
+        const isCode = num.test(defaultArea[0]);
+
+        let isValid;
+
+        if (!isCode) {
+            isValid = defaultArea.every((item) => chinese.test(item));
+        } else {
+            isValid = defaultArea.every((item) => num.test(item));
+        }
+        assert(isValid, '传入的默认值参数有误');
+
+        // 映射默认值，避免直接更改props
+        this.setState({
+            isCode,
+            defaults: defaultArea,
+            isSetDefault: true
+        }, () => {
+            this.setDefVal();
+        });
+    }
+
+    setDefVal () {
+        const { provinces, defaults } = this.state;
+        let provinceCode = '';
+        let province = '';
+
+        if (this.state.isCode) {
+            provinceCode = defaults[0];
+            province = provinces[provinceCode];
+        } else {
+            province = find(provinces, (item) => item === defaults[0]);
+            assert(province, `省份 ${defaults[0]} 不存在`);
+            provinceCode = find(Object.keys(provinces), (item) => provinces[item] === defaults[0]);
+        }
+        
+        this.provinceChange(provinceCode, province);
+        
+        // 还原默认值，避免用户选择出错
+        this.setState({
+            defaults: []
+        });
     }
 
     getAreaCode () {
@@ -120,6 +165,7 @@ export default class AreaSelect extends React.Component {
     }
 
     provinceChange (code, text) {
+        const { defaults, isCode } = this.state;
         const { level } = this.props;
 
         if (level ===  0) {
@@ -127,16 +173,34 @@ export default class AreaSelect extends React.Component {
                 curProvince: text,
                 curProvinceCode: code
             }, this.selectChange);
-        } else if (level === 1) {
-            const citys = AreaData[code];
-            if (!citys) {
-                assert(citys, `(城市)地区数据出现了错误`);
-                return;
+            return;
+        }
+
+        const citys = AreaData[code];
+        if (!citys) {
+            assert(citys, `(城市)地区数据出现了错误`);
+            this.setState({
+                citys: {}
+            });
+            return;
+        }
+
+        let curCity = Object.values(citys)[0];
+        let curCityCode = Object.keys(citys)[0];
+        
+        if(defaults[1]) {
+            if(isCode) {
+                curCityCode = find(Object.keys(citys), (item) => item === defaults[1]);
+                assert(curCityCode, `城市 ${defaults[1]} 不存在于省份 ${defaults[0]} 中`);
+                curCity = citys[curCityCode];
+            } else {
+                curCity = find(citys, (item) => item === defaults[1]);
+                assert(curCity, `城市 ${defaults[1]} 不存在于省份 ${defaults[0]} 中`);
+                curCityCode = find(Object.keys(citys), (item) => citys[item] === defaults[1]);                
             }
-
-            const curCity = Object.values(citys)[0];
-            const curCityCode = Object.keys(citys)[0];
-
+        }
+        
+        if (level === 1) {
             this.setState({
                 curProvince: text,
                 curProvinceCode: code,
@@ -145,24 +209,30 @@ export default class AreaSelect extends React.Component {
                 citys
             }, this.selectChange);
         } else if (level === 2) {
-            const citys = AreaData[code];
-            if (!citys) {
-                assert(citys, `(城市)地区数据出现了错误`);
-                return;
-            }
-
-            const curCity = Object.values(citys)[0];
-            const curCityCode = Object.keys(citys)[0];
-
             const areas = AreaData[curCityCode];
 
             if (!areas) {
                 assert(areas, `(市区)地区数据出现了错误`);
+                this.setState({
+                    areas: {}
+                });
                 return;
             }
 
-            const curArea = Object.values(areas)[0];
-            const curAreaCode = Object.keys(areas)[0];
+            let curArea = Object.values(areas)[0];
+            let curAreaCode = Object.keys(areas)[0];
+
+            if (defaults[2]) {
+                if(isCode) {
+                    curAreaCode = find(Object.keys(areas), (item) => item === defaults[2]);
+                    assert(curArea, `县区 ${defaults[2]} 不存在于城市 ${defaults[1]} 中`);
+                    curArea = areas[curAreaCode];
+                } else {
+                    curArea = find(areas, (item) => item === defaults[2]);
+                    assert(curArea, `县区 ${defaults[2]} 不存在于城市 ${defaults[1]} 中`);
+                    curAreaCode = find(Object.keys(areas), (item) => areas[item] === defaults[2]);
+                }
+            }
 
             this.setState({
                 curProvince: text,
@@ -192,6 +262,9 @@ export default class AreaSelect extends React.Component {
 
             if (!areas) {
                 assert(areas, `(市区)地区数据出现了错误`);
+                this.setState({
+                    areas: {}
+                });
                 return;
             }
 
@@ -291,6 +364,26 @@ export default class AreaSelect extends React.Component {
     }
 
     componentDidMount () {
-        // TODO: 设置默认值
+        const { defaultArea, level } = this.props;
+        if (isArray(defaultArea) && defaultArea.length === level + 1) {
+            this.beforeSetDefault();
+        }
+
+        if (isArray(defaultArea) && defaultArea.length && defaultArea.length !== level + 1) {
+            assert(false, `设置的默认值和 level 值不匹配`);
+        }
+    }
+
+    componentDidUpdate () {
+        const { defaultArea, level } = this.props;
+        const { isSetDefault } = this.state;
+        
+        if (!isSetDefault && isArray(defaultArea) && defaultArea.length === level + 1) {
+            this.beforeSetDefault();
+        }
+
+        if (!isSetDefault && isArray(defaultArea) && defaultArea.length && defaultArea.length !== level + 1) {
+            assert(false, `设置的默认值和 level 值不匹配`);
+        }
     }
 }
