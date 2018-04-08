@@ -101,7 +101,13 @@ export default class AreaSelect extends React.Component {
 
     getAreaCode () {
         const { level } = this.props;
-        const { curProvinceCode, curCityCode, curAreaCode } = this.state;
+        let { curProvince, curProvinceCode, curCity, curCityCode, curArea, curAreaCode } = this.state;
+
+        if (curProvince === curCity) {
+            // 纠正台湾省的 code 返回
+            curCityCode = curProvinceCode;
+        }
+
         let codes = [];
 
         switch (level) {
@@ -142,10 +148,15 @@ export default class AreaSelect extends React.Component {
 
     getAreaCodeAndText () {
         const { level } = this.props;
-        const { 
+        let { 
             curProvince, curCity, curArea,
             curProvinceCode, curCityCode, curAreaCode  
         } = this.state;
+
+        if (curProvince === curCity) {
+            // 纠正台湾省的 code 返回
+            curCityCode = curProvinceCode;
+        }
 
         let textCodes = [];
 
@@ -292,8 +303,7 @@ export default class AreaSelect extends React.Component {
 
     selectChange () {
         const { onChange, type } = this.props;
-        const { curProvince, curProvinceCode, curCity, curCityCode, curArea, curAreaCode } = this.state;
-        
+    
         if(typeof onChange === 'function') {
             if(type === 'code') {
                 onChange(this.getAreaCode());

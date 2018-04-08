@@ -99,6 +99,11 @@ export default class AreaCascader extends React.Component {
             emitter.emit('set-def-values', codes, labels);
         }
 
+        if (labels[0] === labels[1]) {
+            // 纠正台湾省的 code 返回
+            codes[1] = codes[0];
+        }
+
         if(typeof onChange === 'function') {
             if(type === 'code') {
                 onChange(codes);
