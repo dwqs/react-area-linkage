@@ -104,7 +104,7 @@ export default class AreaSelect extends React.Component {
         let { curProvince, curProvinceCode, curCity, curCityCode, curArea, curAreaCode } = this.state;
 
         if (curProvince === curCity) {
-            // 纠正台湾省的 code 返回
+            // fix #2: 纠正台湾省的 code 返回
             curCityCode = curProvinceCode;
         }
 

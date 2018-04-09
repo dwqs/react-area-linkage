@@ -111,7 +111,7 @@ export default class AreaCascader extends React.Component {
         }
 
         if (labels[0] === labels[1]) {
-            // 纠正台湾省的 code 返回
+            // fix #2: 纠正台湾省的 code 返回
             codes[1] = codes[0];
         }
 
