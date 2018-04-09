@@ -236,7 +236,7 @@ export default class AreaSelect extends React.Component {
             if (defaults[2]) {
                 if(isCode) {
                     curAreaCode = find(Object.keys(areas), (item) => item === defaults[2]);
-                    assert(curArea, `县区 ${defaults[2]} 不存在于城市 ${defaults[1]} 中`);
+                    assert(curAreaCode, `县区 ${defaults[2]} 不存在于城市 ${defaults[1]} 中`);
                     curArea = areas[curAreaCode];
                 } else {
                     curArea = find(areas, (item) => item === defaults[2]);
