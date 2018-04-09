@@ -132,15 +132,21 @@ export default class CascaderMenu extends React.Component {
     }
 
     render () {
-        return this.getShowOptions().map((options, index) => {
-            return (
-                <ul className='cascader-menu-list' key={index} ref={this.saveMenuRef(index)}>
-                    {
-                        options.map(option => this.getOption(option, index))
-                    }
-                </ul>
-            );
-        });
+        return (
+            <div>
+                {
+                    this.getShowOptions().map((options, index) => {
+                        return (
+                            <ul className='cascader-menu-list' key={index} ref={this.saveMenuRef(index)}>
+                                {
+                                    options.map(option => this.getOption(option, index))
+                                }
+                            </ul>
+                        );
+                    })
+                }
+            </div>
+        );
     }
 
     componentDidMount () {
