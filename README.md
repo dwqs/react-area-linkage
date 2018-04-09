@@ -92,7 +92,7 @@ import { AreaSelect } from 'react-area-linkage';
 | defaultArea | Array | - | [] | 设置默认值(值类型数据需统一，要么全是文本，要么全是区域代码) |
 | onChange | Function | - | - | 选择项改变时的回调 |
 | disabled | Boolean | - | false | 是否禁用 |
-| separator | String | - | '/' | 分隔符 |
+| separator | String | - | '/' | 显示选中文本的分隔符 |
 
 ## Related Project
 * [vue-area-linkage](https://github.com/dwqs/vue-area-linkage/)
