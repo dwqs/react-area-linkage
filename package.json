@@ -1,6 +1,6 @@
 {
   "name": "react-area-linkage",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "React area linkage",
   "author": "dwqs",
   "license": "MIT",
@@ -24,11 +24,12 @@
   "scripts": {
     "prepush": "npm run ilint -q",
     "dev": "npx cross-env NODE_ENV=development node ./build/dev-server.js",
+    "build:components": "NODE_ENV=production npx webpack --config ./webpack.components.config.js --progress --hide-modules",
     "build": "npx cross-env NODE_ENV=production npx webpack --config ./build/webpack.prod.config.js --progress --hide-modules",
     "ilint": "npx eslint src/**/*.js",
     "fix": "npx eslint --fix src/**/*.js",
     "postbuild": "mv ./demo/index.html ./",
-    "prepublishOnly": "npx webpack --config ./webpack.build.config.js --progress --hide-modules"
+    "prepublishOnly": "rm -rf dist && npm run build:components && npx webpack --config ./webpack.build.config.js --progress --hide-modules"
   },
   "dependencies": {
     "area-data": "^3.0.1",
@@ -62,7 +63,6 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^3.0.1",
-    "file-loader": "^1.1.5",
     "gulp-util": "^3.0.8",
     "happypack": "^4.0.0",
     "html-webpack-plugin": "^2.30.1",
@@ -77,7 +77,6 @@
     "react-dom": "^16.0.0",
     "react-hot-loader": "^3.0.0-beta.7",
     "style-loader": "^0.19.0",
-    "url-loader": "^0.6.2",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-md5-hash": "^0.0.5",
