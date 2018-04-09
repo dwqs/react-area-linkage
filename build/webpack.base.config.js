@@ -11,28 +11,7 @@ let config = require('../config');
 
 module.exports = {
     module: {
-        rules: [
-            {
-                test: /\.(png|jpg|gif|jpeg)$/,
-                use: [{
-                    loader: 'url-loader',
-                    options: {
-                        limit: 8192,
-                        name: '[name].[ext]?[hash:8]'
-                    }
-                }]
-            },
-            {
-                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        limit: 8192,
-                        name: 'fonts/[name].[ext]'
-                    }
-                }]
-            }
-        ]
+        rules: []
     },
 
     resolve: {
