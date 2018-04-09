@@ -94,8 +94,9 @@ export default class CascaderMenu extends React.Component {
         if (l === 2) {
             labels = [provinces[codes[0]], citys[codes[1]]];
         } else if (l === 3) {
+            // fix https://github.com/dwqs/vue-area-linkage/issues/7
             const areas = AreaData[codes[1]];
-            labels = [provinces[codes[0]], citys[codes[1]], areas[codes[2]]];
+            labels = [provinces[codes[0]], citys[codes[1]], areas ? areas[codes[2]] : citys[codes[2]]];
         }
 
         return labels;

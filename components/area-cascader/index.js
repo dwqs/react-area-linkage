@@ -83,9 +83,18 @@ export default class AreaCascader extends React.Component {
 
         for (let i = 0, c = cities.length; i < c; i++) {
             const city = cities[i];
-            for (let j = 0, l = cities[i].children.length; j < l; j++) {
-                const item = cities[i].children[j];
-                item['children'] = this.iterate(AreaData[cities[i].children[j].value]);
+            for (let j = 0, l = city.children.length; j < l; j++) {
+                const item = city.children[j];
+                const areas = this.iterate(AreaData[city.children[j].value]);
+                // fix: https://github.com/dwqs/vue-area-linkage/issues/7
+                if (areas.length) {
+                    item['children'] = areas;
+                } else {
+                    item['children'] = [{
+                        label: item.label,
+                        value: item.value
+                    }];
+                }
             }
             temp.push(city);
         }
