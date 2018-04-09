@@ -34,12 +34,12 @@ export default class Main extends Component {
                 <h5>设置 placeholders</h5>
                 <Basic placeholders={['选择省', '选择市']}/>
                 <p className='desc'>
-                    <code>placeholders</code>&nbsp;是一个数组, 数组项顺序分别对应省/市/区/街道.
+                    <code>placeholders</code>&nbsp;是一个数组, 数组项顺序分别对应省/市/区.
                 </p>
                 <h5>设置默认值及省市区联动</h5>
                 <DefaultVal level={2} />
                 <p className='desc'>
-                    <code>selected</code>&nbsp;是一个数组, 数组项顺序分别对应省/市/区/街道, 且类型(区域代码/区域文本)必须统一. 以第一个元素类型为基准. 类型不统一将报错.
+                    <code>selected</code>&nbsp;是一个数组, 数组项顺序分别对应省/市/区, 且类型(区域代码/区域文本)必须统一. 以第一个元素类型为基准. 类型不统一将报错.
                 </p>
                 <h5>只选省份</h5>
                 <DefaultVal level={0} type='all' />
