@@ -37,16 +37,6 @@ module.exports = {
                     fallback: 'style-loader',
                     use: ['css-loader']
                 })
-            },
-            {
-                test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        limit: 8192,
-                        name: 'fonts/[name].[hash:7].[ext]'
-                    }
-                }]
             }
         ]
     },
@@ -89,17 +79,17 @@ module.exports = {
             assetNameRegExp: /\.less|\.css$/g
         }),
         
-        new ParallelUglifyPlugin({
-            workerCount: os.cpus().length,
-            cacheDir: '.cache/',
-            sourceMap: false,
-            compress: {
-                warnings: false,
-                drop_debugger: true,
-                drop_console: true
-            },
-            mangle: true
-        }),
+        // new ParallelUglifyPlugin({
+        //     workerCount: os.cpus().length,
+        //     cacheDir: '.cache/',
+        //     sourceMap: false,
+        //     compress: {
+        //         warnings: false,
+        //         drop_debugger: true,
+        //         drop_console: true
+        //     },
+        //     mangle: true
+        // }),
         new webpack.optimize.ModuleConcatenationPlugin()
     ]
 };
