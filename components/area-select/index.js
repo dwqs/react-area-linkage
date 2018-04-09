@@ -191,7 +191,11 @@ export default class AreaSelect extends React.Component {
         if (!citys) {
             assert(citys, `(城市)地区数据出现了错误`);
             this.setState({
-                citys: {}
+                citys: {
+                    [code]: text
+                },
+                curCity: text,
+                curCityCode: code,
             });
             return;
         }
@@ -225,7 +229,11 @@ export default class AreaSelect extends React.Component {
             if (!areas) {
                 assert(areas, `(市区)地区数据出现了错误`);
                 this.setState({
-                    areas: {}
+                    areas: {
+                        [curCityCode]: curCity
+                    },
+                    curArea: curCity,
+                    curAreaCode: curCityCode
                 });
                 return;
             }
