@@ -45,10 +45,19 @@ export default class Cascader extends React.Component {
         if (this.props.disabled) {
             return;
         }
-        this.props.emitter.emit('shown');
+        
+        const tmp = this.state.shown;
+        if (!tmp) {
+            this.props.emitter.emit('shown');
+        }
+        
         this.setState({
-            shown: !this.state.shown,
+            shown: !tmp,
             top: this.setPosition(false)
+        }, () => {
+            if (!this.state.shown) {
+                this.props.emitter.emit('doc-click');
+            }
         });
     }
 
