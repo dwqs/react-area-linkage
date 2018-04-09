@@ -32,7 +32,7 @@ export default class AreaCascader extends React.Component {
 
     static propTypes = {
         type: PropTypes.oneOf(['code', 'text', 'all']),  // 返回类型
-        placeholders: PropTypes.string, 
+        placeholder: PropTypes.string, 
         level: PropTypes.oneOf([0, 1]),  // 0->二联 1->三联
         size: PropTypes.oneOf(['small', 'medium', 'large']), // 大小
         defaultArea: PropTypes.array, // 默认值
