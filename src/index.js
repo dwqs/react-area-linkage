@@ -7,3 +7,10 @@ export {
     AreaSelect,
     AreaCascader
 };
+
+const ReactAreaLinkage = {
+    AreaSelect,
+    AreaCascader
+};
+
+export default ReactAreaLinkage;
