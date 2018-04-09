@@ -18,7 +18,7 @@ export default class Start extends Component {
                 </div>
                 <div className="register">
                     <h4>使用</h4>
-                    <pre>import React from 'react';<br/><br/>import &#123; AreaSelect, AreaCascader &#125; from 'react-area-linkage';<br/><br/>&lt;AreaSelect/&gt;<br/>&lt;AreaCascader/&gt;</pre>
+                    <pre>import React from 'react';<br/><br/>import ReactDOM from 'react-dom';<br/><br/>import 'react-area-linkage/dist/index.css';<br/><br/>import &#123; AreaSelect, AreaCascader &#125; from 'react-area-linkage';<br/><br/>&lt;AreaSelect/&gt;<br/><br/>&lt;AreaCascader/&gt;</pre>
                 </div>
                 <br/>
             </div>
