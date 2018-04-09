@@ -9,7 +9,7 @@ import Cascader from './cascader/index';
 
 import { assert, isArray } from '@src/utils';
 
-import emitter from './emit';
+import Emitter from './emit';
 
 export default class AreaCascader extends React.Component {
     constructor(props) {
@@ -24,6 +24,8 @@ export default class AreaCascader extends React.Component {
             isCode: false,
             isSetDefault: false
         };
+        // 避免多个 AreaCascader 组件的影响
+        this.emitter = new Emitter();
     }
     
     static displayName = 'AreaCascader'
@@ -96,7 +98,7 @@ export default class AreaCascader extends React.Component {
         
         assert(codes.length === labels.length, '地区数据可能出错了');
         if (this.state.isSetDefault) {
-            emitter.emit('set-def-values', codes, labels);
+            this.emitter.emit('set-def-values', codes, labels);
         }
 
         if (labels[0] === labels[1]) {
@@ -231,6 +233,7 @@ export default class AreaCascader extends React.Component {
                 <Cascader 
                     placeholder={placeholder} 
                     size={size} 
+                    emitter={this.emitter}
                     options={options}
                     disabled={disabled} 
                     separator={separator} />
@@ -261,7 +264,7 @@ export default class AreaCascader extends React.Component {
             assert(false, `设置的默认值和 level 值不匹配`);
         }
 
-        emitter.on('selected', this.handleSelectChange);
+        this.emitter.on('selected', this.handleSelectChange);
     }
 
     componentDidUpdate () {
@@ -278,6 +281,7 @@ export default class AreaCascader extends React.Component {
     }
 
     componentWillUnmount () {
-        emitter.off('selected');
+        this.emitter.destroyed();
+        this.emitter = null;
     }
 }

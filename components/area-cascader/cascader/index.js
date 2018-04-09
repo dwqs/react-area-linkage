@@ -7,7 +7,7 @@ import CascaderMenu from './menu';
 
 import { contains, setPanelPosition } from '@src/utils.js';
 
-import emitter from '../emit';
+// import emitter from '../emit';
 
 export default class Cascader extends React.Component {
     constructor(props) {
@@ -45,7 +45,7 @@ export default class Cascader extends React.Component {
         if (this.props.disabled) {
             return;
         }
-        emitter.emit('shown');
+        this.props.emitter.emit('shown');
         this.setState({
             shown: !this.state.shown,
             top: this.setPosition(false)
@@ -74,7 +74,7 @@ export default class Cascader extends React.Component {
             this.setState({
                 shown: false
             }, () => {
-                emitter.emit('doc-click');
+                this.props.emitter.emit('doc-click');
             });
         }
     }
@@ -100,7 +100,7 @@ export default class Cascader extends React.Component {
     }
 
     render () {
-        const { placeholder, disabled, size, children, options } = this.props;
+        const { placeholder, disabled, size, children, options, ...rest } = this.props;
         const { shown, top, label, values } = this.state;
 
         const classes = classNames('area-select', {
@@ -117,7 +117,7 @@ export default class Cascader extends React.Component {
                 <div className={classNames('cascader-menu-list-wrap area-zoom-in-top-enter', {
                     'area-zoom-in-top-enter-active': shown
                 })} style={{ top: top }} ref={this.setWrapRef}>
-                    <CascaderMenu data={options} values={values} />
+                    <CascaderMenu data={options} values={values}  {...rest} />
                 </div>
             </div>
         );
@@ -132,8 +132,8 @@ export default class Cascader extends React.Component {
         window.addEventListener('resize', this.handleDocResize, false);
 
         // some emit
-        emitter.on('selected', this.handleSelectedChange);
-        emitter.on('set-def-values', this.setDefValues);
+        this.props.emitter.on('selected', this.handleSelectedChange);
+        this.props.emitter.on('set-def-values', this.setDefValues);
     }
 
     componentWillUnmount() {
@@ -143,8 +143,5 @@ export default class Cascader extends React.Component {
 
         this.rootDOM = null;
         this.areaRect = null;
-
-        emitter.off('selected');
-        emitter.off('set-def-values');
     }
 }

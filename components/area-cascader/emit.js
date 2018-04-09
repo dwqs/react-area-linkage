@@ -1,4 +1,4 @@
-class Emitter {
+export default class Emitter {
     constructor () {
         this.eventsMap = Object.create(null);
     }
@@ -31,6 +31,8 @@ class Emitter {
             }
         }
     }
-}
 
-export default new Emitter();
+    destroyed () {
+        this.eventsMap = null;
+    }
+}

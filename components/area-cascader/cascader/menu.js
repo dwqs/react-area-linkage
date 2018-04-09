@@ -7,8 +7,6 @@ import AreaData from 'area-data';
 
 import { isArray, scrollIntoView } from '@src/utils';
 
-import emitter from '../emit';
-
 export default class CascaderMenu extends React.Component {
     constructor(props) {
         super(props);
@@ -48,7 +46,7 @@ export default class CascaderMenu extends React.Component {
             });
 
             if (!children) {
-                emitter.emit('selected', activeValues, labels);
+                this.props.emitter.emit('selected', activeValues, labels);
             }
         };
     }
@@ -146,14 +144,8 @@ export default class CascaderMenu extends React.Component {
     }
 
     componentDidMount () {
-        emitter.on('doc-click', this.resetActiveVal);
-        emitter.on('set-def-values', this.setDefValues);
-        emitter.on('shown', this.scrollToSelectedOption);
-    }
-
-    componentWillUnmount() {
-        emitter.off('doc-click');
-        emitter.off('shown');
-        emitter.off('set-def-values');
+        this.props.emitter.on('doc-click', this.resetActiveVal);
+        this.props.emitter.on('set-def-values', this.setDefValues);
+        this.props.emitter.on('shown', this.scrollToSelectedOption);
     }
 }
