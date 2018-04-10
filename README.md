@@ -60,12 +60,12 @@ import 'react-area-linkage/dist/index.css'; // v2 or higher
 // Only import AreaCascader component
 import { AreaCascader } from 'react-area-linkage';
 
-<area-cascader onChange={this.selectedChange}></area-cascader>
+<AreaCascader onChange={this.selectedChange}></AreaCascader>
 
 // Only import AreaSelect component
 import { AreaSelect } from 'react-area-linkage'; 
 
-<area-select onChange={this.selectedChange}></area-select>
+<AreaSelect onChange={this.selectedChange}></AreaSelect>
 ```
 
 ## 属性
