@@ -1,4 +1,5 @@
 import React, {Component, Children} from 'react';
+import { pcaa } from 'area-data';
 
 import { AreaCascader } from '../../../src/index';
 
@@ -36,7 +37,7 @@ export default class DefaultVal extends Component {
         return (
             <div className="code-area">
                 <div className="area-left">
-                    <AreaCascader type='text' level={1} defaultArea={def} onChange={this.handleSelectedChange}/>
+                    <AreaCascader data={pcaa} type='text' level={1} defaultArea={def} onChange={this.handleSelectedChange}/>
                 </div>
                 <div className="area-right">
                     <pre><code>{`[${this.state.selected}]`}</code></pre>

@@ -1,4 +1,5 @@
 import React, {Component, Children} from 'react';
+import { pca, pcaa } from 'area-data';
 
 import { AreaSelect } from '../../../src/index';
 
@@ -26,18 +27,19 @@ export default class DefaultVal extends Component {
     render () {
         const { level, type } = this.props;
         let def = [];
+        let d = {};
         if(level === 0) {
             def = ['440000'];
+            d = pca;
         } else if (level === 2) {
             def = ['440000','440300','440305'];
-        } else {
-            def = ['广东省', '深圳市', '南山区', '粤海街道'];
+            d = pcaa;
         }
 
         return (
             <div className="code-area">
                 <div className="area-left">
-                    <AreaSelect type={type} level={level} defaultArea={def} onChange={this.handleSelectedChange}/>
+                    <AreaSelect data={d} type={type} level={level} defaultArea={def} onChange={this.handleSelectedChange}/>
                 </div>
                 <div className="area-right">
                     {

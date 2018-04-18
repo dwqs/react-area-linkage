@@ -1,4 +1,5 @@
 import React, {Component, Children} from 'react';
+import { pca } from 'area-data';
 
 import { AreaSelect } from '../../../src/index';
 
@@ -27,7 +28,7 @@ export default class AreaText extends Component {
         return (
             <div className="code-area">
                 <div className="area-left">
-                    <AreaSelect type='text' onChange={this.handleSelectedChange}/>
+                    <AreaSelect type='text' data={pca} onChange={this.handleSelectedChange}/>
                 </div>
                 <div className="area-right">
                     <pre><code>{`[${this.state.selected}]`}</code></pre>

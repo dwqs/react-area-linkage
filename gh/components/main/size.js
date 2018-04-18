@@ -1,5 +1,7 @@
 import React, {Component, Children} from 'react';
 
+import { pca } from 'area-data';
+
 import { AreaSelect } from '../../../src/index';
 
 export default class Size extends Component {
@@ -27,7 +29,7 @@ export default class Size extends Component {
         return (
             <div className="code-area">
                 <div className="area-left">
-                    <AreaSelect size='large' onChange={this.handleSelectedChange}/>
+                    <AreaSelect  data={pca} size='large' onChange={this.handleSelectedChange}/>
                 </div>
                 <div className="area-right">
                     <pre><code>{`[${this.state.selected}]`}</code></pre>

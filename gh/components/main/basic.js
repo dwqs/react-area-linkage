@@ -1,4 +1,5 @@
 import React, {Component, Children} from 'react';
+import { pca } from 'area-data';
 
 import { AreaSelect } from '../../../src/index';
 
@@ -28,7 +29,7 @@ export default class Basic extends Component {
         return (
             <div className="code-area">
                 <div className="area-left">
-                    <AreaSelect placeholders={placeholders ? placeholders : []} onChange={this.handleSelectedChange}/>
+                    <AreaSelect data={pca} placeholders={placeholders ? placeholders : []} onChange={this.handleSelectedChange}/>
                 </div>
                 <div className="area-right">
                     <pre><code>{`[${this.state.selected}]`}</code></pre>

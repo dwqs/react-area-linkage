@@ -1,4 +1,5 @@
 import React, {Component, Children} from 'react';
+import { pca } from 'area-data';
 
 import { AreaCascader } from '../../../src/index';
 
@@ -27,7 +28,7 @@ export default class CasAreaText extends Component {
         return (
             <div className="code-area">
                 <div className="area-left">
-                    <AreaCascader type='all' onChange={this.handleSelectedChange}/>
+                    <AreaCascader data={pca} type='all' onChange={this.handleSelectedChange}/>
                 </div>
                 <div className="area-right">
                     <pre><code>{`${JSON.stringify(this.state.selected)}`}</code></pre>
