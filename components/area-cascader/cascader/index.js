@@ -30,7 +30,8 @@ export default class Cascader extends React.Component {
         disabled: PropTypes.bool,
         placeholder: PropTypes.string,
         size: PropTypes.oneOf(['small', 'medium', 'large']),
-        separator: PropTypes.string
+        separator: PropTypes.string,
+        data: PropTypes.object.isRequired
     }
 
     static defaultProps = {
@@ -109,7 +110,7 @@ export default class Cascader extends React.Component {
     }
 
     render () {
-        const { placeholder, disabled, size, children, options, ...rest } = this.props;
+        const { data, placeholder, disabled, size, children, options, ...rest } = this.props;
         const { shown, top, label, values } = this.state;
 
         const classes = classNames('area-select', {
@@ -126,7 +127,7 @@ export default class Cascader extends React.Component {
                 <div className={classNames('cascader-menu-list-wrap area-zoom-in-top-enter', {
                     'area-zoom-in-top-enter-active': shown
                 })} style={{ top: top }} ref={this.setWrapRef}>
-                    <CascaderMenu data={options} values={values}  {...rest} />
+                    <CascaderMenu data={options} area={data} values={values}  {...rest} />
                 </div>
             </div>
         );

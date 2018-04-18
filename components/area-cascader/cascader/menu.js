@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import arrayTreeFilter from 'array-tree-filter';
 import { findDOMNode } from 'react-dom';
-import AreaData from 'area-data';
 
 import { isArray, scrollIntoView } from '@src/utils';
 
@@ -21,7 +20,8 @@ export default class CascaderMenu extends React.Component {
 
     static propTypes = {
         data: PropTypes.array,
-        values: PropTypes.array
+        values: PropTypes.array,
+        area: PropTypes.object.isRequired
     }
 
     static defaultProps = {
@@ -81,8 +81,8 @@ export default class CascaderMenu extends React.Component {
     }
 
     getActiveLabels = (codes) => {
-        const provinces = AreaData['86'];
-        const citys = AreaData[codes[0]];
+        const provinces = this.props.area['86'];
+        const citys = this.props.area[codes[0]];
         const l = codes.length;
 
         if (l < 2) {
@@ -95,7 +95,7 @@ export default class CascaderMenu extends React.Component {
             labels = [provinces[codes[0]], citys[codes[1]]];
         } else if (l === 3) {
             // fix https://github.com/dwqs/vue-area-linkage/issues/7
-            const areas = AreaData[codes[1]];
+            const areas = this.props.area[codes[1]];
             labels = [provinces[codes[0]], citys[codes[1]], areas ? areas[codes[2]] : citys[codes[2]]];
         }
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import AreaData from 'area-data';
 import find from 'lodash.find';
 
 import Select from './select/index';
@@ -14,7 +13,7 @@ export default class AreaSelect extends React.Component {
         super(props);
         this.state = {
             // 区域数据
-            provinces: AreaData['86'],
+            provinces: this.props.data['86'],
             citys: {},
             areas: {},
 
@@ -40,7 +39,8 @@ export default class AreaSelect extends React.Component {
         size: PropTypes.oneOf(['small', 'medium', 'large']), // 大小
         defaultArea: PropTypes.array, // 默认值
         onChange: PropTypes.func,
-        disabled: PropTypes.bool
+        disabled: PropTypes.bool,
+        data: PropTypes.object.isRequired
     }
 
     static defaultProps = {
@@ -187,7 +187,7 @@ export default class AreaSelect extends React.Component {
             return;
         }
 
-        const citys = AreaData[code];
+        const citys = this.props.data[code];
         if (!citys) {
             assert(citys, `(城市)地区数据出现了错误`);
             this.setState({
@@ -224,7 +224,7 @@ export default class AreaSelect extends React.Component {
                 citys
             }, this.selectChange);
         } else if (level === 2) {
-            const areas = AreaData[curCityCode];
+            const areas = this.props.data[curCityCode];
 
             if (!areas) {
                 assert(areas, `(市区)地区数据出现了错误`);
@@ -277,7 +277,7 @@ export default class AreaSelect extends React.Component {
                 curCityCode: code
             }, this.selectChange);
         } else if (level === 2) {
-            const areas = AreaData[code];
+            const areas = this.props.data[code];
 
             if (!areas) {
                 assert(areas, `(市区)地区数据出现了错误`);
@@ -311,7 +311,7 @@ export default class AreaSelect extends React.Component {
 
     selectChange () {
         const { onChange, type } = this.props;
-    
+        
         if(typeof onChange === 'function') {
             if(type === 'code') {
                 onChange(this.getAreaCode());
@@ -382,6 +382,9 @@ export default class AreaSelect extends React.Component {
     }
 
     componentDidMount () {
+        if (!this.props.data || !this.props.data['86']) {
+            throw new Error('[react-area-linkage]: 需要提供地区数据，格式参考见：https://github.com/dwqs/area-data');
+        }
         const { defaultArea, level } = this.props;
         if (isArray(defaultArea) && defaultArea.length === level + 1) {
             this.beforeSetDefault();

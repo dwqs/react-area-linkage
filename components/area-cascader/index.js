@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import AreaData from 'area-data';
 import find from 'lodash.find';
 
 import Cascader from './cascader/index';
@@ -16,7 +15,7 @@ export default class AreaCascader extends React.Component {
         super(props);
         this.state = {
             // 区域数据
-            provinces: AreaData['86'],
+            provinces: this.props.data['86'],
             options: [],
 
             // 设置默认值的判断
@@ -38,7 +37,8 @@ export default class AreaCascader extends React.Component {
         defaultArea: PropTypes.array, // 默认值
         onChange: PropTypes.func,
         disabled: PropTypes.bool,
-        separator: PropTypes.string
+        separator: PropTypes.string,
+        data: PropTypes.object.isRequired
     }
 
     static defaultProps = {
@@ -64,14 +64,14 @@ export default class AreaCascader extends React.Component {
 
     iterateCities () {
         const temp = [];
-        const provinces = this.iterate(AreaData['86']);
+        const provinces = this.iterate(this.props.data['86']);
 
         for (let i = 0, l = provinces.length; i < l; i++) {
             const item = {};
             item['label'] = provinces[i].label;
             item['value'] = provinces[i].value;
 
-            item['children'] = this.iterate(AreaData[provinces[i].value]);
+            item['children'] = this.iterate(this.props.data[provinces[i].value]);
             temp.push(item);
         }
         return temp;
@@ -85,7 +85,7 @@ export default class AreaCascader extends React.Component {
             const city = cities[i];
             for (let j = 0, l = city.children.length; j < l; j++) {
                 const item = city.children[j];
-                const areas = this.iterate(AreaData[city.children[j].value]);
+                const areas = this.iterate(this.props.data[city.children[j].value]);
                 // fix: https://github.com/dwqs/vue-area-linkage/issues/7
                 if (areas.length) {
                     item['children'] = areas;
@@ -171,7 +171,7 @@ export default class AreaCascader extends React.Component {
             provinceCode = find(Object.keys(provinces), (item) => provinces[item] === defaults[0]);
         }
 
-        const citys = AreaData[provinceCode];
+        const citys = this.props.data[provinceCode];
 
         if (!citys) {
             assert(citys, `(城市)地区数据出现了错误`);
@@ -196,7 +196,7 @@ export default class AreaCascader extends React.Component {
         if (level === 0) {
             this.handleSelectChange([provinceCode, curCityCode], [province, curCity]);
         } else if (level === 1) {
-            const areas = AreaData[curCityCode];
+            const areas = this.props.data[curCityCode];
 
             if (!areas) {
                 assert(areas, `(市区)地区数据出现了错误`);
@@ -231,7 +231,7 @@ export default class AreaCascader extends React.Component {
 
     render () {
         const { options } = this.state;
-        let { size, placeholder, disabled, separator } = this.props;
+        let { size, placeholder, disabled, separator, data } = this.props;
 
         if(!['large', 'medium', 'small'].includes(size)) {
             size = 'medium';
@@ -242,6 +242,7 @@ export default class AreaCascader extends React.Component {
                 <Cascader 
                     placeholder={placeholder} 
                     size={size} 
+                    data={data}
                     emitter={this.emitter}
                     options={options}
                     disabled={disabled} 
@@ -277,6 +278,10 @@ export default class AreaCascader extends React.Component {
     }
 
     componentDidUpdate () {
+        if (!this.props.data || !this.props.data['86']) {
+            throw new Error('[react-area-linkage]: 需要提供地区数据，格式参考见：https://github.com/dwqs/area-data');
+        }
+        
         const { defaultArea, level } = this.props;
         const { isSetDefault } = this.state;
         
